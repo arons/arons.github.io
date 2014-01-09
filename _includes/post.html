@@ -1,0 +1,15 @@
+<article class="instapaper_body">
+  <header>
+    <h2 class="instapaper_title"><a href="{{ post.url }}">{{ post.title }}</a></h2><br>
+    <time pubdate datetime="{{ post.date | html_global_date }}">{{ post.date | date: "%m %d %Y" }}</time>
+  </header>
+  <div class="post">
+  {% if content %}
+    {{ content }}
+  {% else %}
+    {{ post.content }}
+  {% endif %}
+  </div>
+</article>
+
+
