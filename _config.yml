@@ -1,4 +1,4 @@
-name: AronsBlog
+name: Arons occasionally writes.
 description: Arons occasionally writes.
 
 markdown: redcarpet
@@ -6,17 +6,10 @@ pygments: true
 
 url: http://arons.github.io
 
-paginate: 10
+#paginate: 10
 
 layout: default
 
-# Settings for analytics helper
-# Set 'provider' to the analytics provider you want to use.
-# Set 'provider' to false to turn analytics off globally.
-#        
-analytics :
-  provider : google
-  google : 
-      tracking_id : 'UA-24741902-1'
-  getclicky :
-    site_id :
+
+#future: false
+
