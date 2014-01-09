@@ -6,17 +6,25 @@
     <meta name="description" content="{{ site.description }}">
 
     <!-- Bootstrap -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-theme.min.css" rel="stylesheet">
 
-
+    <!-- Custom styles for this template -->
+    <link href="css/offcanvas.css" rel="stylesheet">
+    
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://code.jquery.com/jquery.js"></script>
+    
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="/js/bootstrap.min.js"></script>
-    
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/offcanvas.js"></script>
+
     <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
-    
+
+    <!-- Analytics -->
     <script type="text/javascript">
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-24741902-1']);
@@ -32,60 +40,82 @@
 </head>
 
 <body>
+    <div class="navbar navbar-fixed-top navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="http://arons.dyndns.org">AronsHome</a>
+        </div>
+        
+        
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><g:plusone></g:plusone></li>
+            <!--
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+             -->
+          </ul>
+        </div> <!-- /.nav-collapse -->
+        
+        
+      </div><!-- /.container -->
+    </div><!-- /.navbar -->
 
-<nav class="navbar navbar-default" role="navigation">
-  <!-- Brand and toggle get grouped for better mobile display -->
-  <div class="navbar-header">
-    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-    <a class="navbar-brand" href="/">AronsBlog</a>
-  </div>
+    <div class="container">
 
-  <!-- Collect the nav links, forms, and other content for toggling -->
-  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-  
-    <ul class="nav navbar-nav">
-      <li><g:plusone></g:plusone></li>
-    </ul>
-    
-    <form class="navbar-form navbar-left" role="search" method="GET" action="http://www.google.com/search">
-      <input type="hidden" name="ie" value="UTF-8">
-      <input type="hidden" name="oe" value="UTF-8">
-      <input type="hidden" name="domains" value="arons.github.io">
-      <input type="hidden" name="sitesearch" value="arons.github.io">
-      <div class="form-group">
-        <input type="text" class="form-control" placeholder="Search" name="q">
-      </div>
-      <button type="submit" class="btn btn-default">Submit</button>
-    </form>
- 
-  
-    <ul class="nav navbar-nav navbar-right">
-        <li><a href='mailto:arons7@gmail.com'>arons7@gmail.com</a></li>
-        <li><a href="//plus.google.com/110416778187193830639?prsrc=3" rel="publisher" target="_top" style="text-decoration:none;">
-            <img src="//ssl.gstatic.com/images/icons/gplus-16.png" alt="Google+" style="border:0;width:16px;height:16px;"/>
-            </a></li>
-        <li><a href="https://github.com/arons">github.com/arons</a></li>
-        <li><a href="feed.xml">RSS</a></li>
-    </ul>
-  </div><!-- /.navbar-collapse -->
-</nav>
+      <div class="row row-offcanvas row-offcanvas-right">
 
+        <div class="col-xs-12 col-sm-9">
+          <p class="pull-right visible-xs">
+            <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
+          </p>
+          <!-- 
+          <div class="jumbotron">
+            <img alt="" src="https://en.gravatar.com/userimage/27524772/70890d356021f6d97a66fd9f1ae84567.jpeg">
+            <p>Who I am?</p>
+          </div>
+           -->
+           
+          <div class="row">
+            {{ content }}
+          </div><!--/row-->
+        </div><!--/span-->
 
-    
- <div class="row-fluid">
-  <div class="span8">
-    {{ content }}
-  </div>
-  <div class="span4">
-    {% include sidebar.html %}
-  </div>
-</div>
-	
-	
+        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+          <div class="list-group">
+          <!-- 
+            <div class="list-group-item"><g:plusone></g:plusone></div> 
+            <a href="#" class="list-group-item active">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+             -->
+          </div>
+        </div><!--/span-->
+      </div><!--/row-->
+
+      <hr>
+
+      <ul class="nav navbar-nav ">
+       <li><a href='mailto:arons7@gmail.com'>arons7@gmail.com</a></li>
+       <li><a href="//plus.google.com/110416778187193830639?prsrc=3" rel="publisher" target="_top" style="text-decoration:none;">
+           <img src="//ssl.gstatic.com/images/icons/gplus-16.png" alt="Google+" style="border:0;width:16px;height:16px;"/>
+           </a></li>
+       <li><a href="https://github.com/arons">github.com/arons</a></li>
+       <!-- <li><a href="feed.xml">RSS</a></li>  -->
+      </ul>
+    </div><!--/.container-->
 </body>
 </html> 
