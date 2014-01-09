@@ -15,6 +15,20 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="/js/bootstrap.min.js"></script>
     
+    <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+    
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-24741902-1']);
+      _gaq.push(['_trackPageview']);
+    
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+    
 </head>
 
 <body>
@@ -33,18 +47,35 @@
 
   <!-- Collect the nav links, forms, and other content for toggling -->
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+  
+    <ul class="nav navbar-nav">
+      <li><g:plusone></g:plusone></li>
+    </ul>
+    
     <form class="navbar-form navbar-left" role="search" method="GET" action="http://www.google.com/search">
       <input type="hidden" name="ie" value="UTF-8">
       <input type="hidden" name="oe" value="UTF-8">
-      <input type="hidden" name="domains" value="arons.dyndns.org">
-      <input type="hidden" name="sitesearch" value="arons.dyndns.or">
+      <input type="hidden" name="domains" value="arons.github.io">
+      <input type="hidden" name="sitesearch" value="arons.github.io">
       <div class="form-group">
         <input type="text" class="form-control" placeholder="Search" name="q">
       </div>
       <button type="submit" class="btn btn-default">Submit</button>
     </form>
+ 
+  
+    <ul class="nav navbar-nav navbar-right">
+        <li><a href='mailto:arons7@gmail.com'>arons7@gmail.com</a></li>
+        <li><a href="//plus.google.com/110416778187193830639?prsrc=3" rel="publisher" target="_top" style="text-decoration:none;">
+            <img src="//ssl.gstatic.com/images/icons/gplus-16.png" alt="Google+" style="border:0;width:16px;height:16px;"/>
+            </a></li>
+        <li><a href="https://github.com/arons">github.com/arons</a></li>
+        <li><a href="feed.xml">RSS</a></li>
+    </ul>
   </div><!-- /.navbar-collapse -->
 </nav>
+
+
     
  <div class="row-fluid">
   <div class="span8">
