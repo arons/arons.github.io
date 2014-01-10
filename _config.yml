@@ -2,9 +2,12 @@ name: Arons occasionally writes.
 description: Arons occasionally writes.
 
 markdown: redcarpet
+
+#safe: true
+lsi: false
 pygments: true
 
-url: http://arons.github.io
+#url: http://arons.github.io
 
 #paginate: 10
 
