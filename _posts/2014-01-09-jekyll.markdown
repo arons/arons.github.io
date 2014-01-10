@@ -28,6 +28,7 @@ After installation I generate my template using [bootstrap].
 Other links:
 
 + [jekyll github repo](https://github.com/mojombo/jekyll)
++ [Using Jekyll with Pages] (https://help.github.com/articles/using-jekyll-with-pages)
 
  
 [bootstrap]: http://getbootstrap.com/

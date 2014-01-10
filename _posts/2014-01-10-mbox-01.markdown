@@ -1,0 +1,65 @@
+---
+layout: post
+title: MBox
+date: 2014-01-10 22:30:00
+categories: hack arduino
+---
+
+
+{% img none /images/2014-01-10/00.jpg 300 200 MBox %}
+
+Few months ago I bought, as a present, an mp3 player for children called [hoerbert].
+It is really well made and the sound quality is pretty good. I really suggest as a product.
+The only problem is that is quite expensive, so I though that would be a nice and easy project for a Christmas present for my daughter.
+
+It was already clear since the beginning that the project would be powered by an [arduino board].
+So I start looking around in order to find a good way to play mp3 file with it and I found the [Freaduino MP3 Music Shield].
+It is the cheapest mp3 board I found for arduino.   
+The board contains an sd card slot, decodes "MP3,WAV,MIDI,Ogg Vorbis" and, they wrote, has an "Excellent sound quality with ±1dB Frequency Response".
+Also the board is well documented on the wiki. They provide even a source code example for a very basic player.
+The only doubt I had was that there was almost no other resources in internet about it, specially if compared to other boards.   
+
+Than was the time to choose a mono audio amp (I didn't want to spent time to build one my selfe).  
+I ordered two mono amp, one from China(left) and one from [Sparkfun]\(right\).
+
+{% img left /images/2014-01-10/01.jpg 300 200 Stereo amp from China %}
+{% img right /images/2014-01-10/02.jpg 300 200 TPA2005D1 from Sparkfun installed on mBox %}
+
+The Chinese version is a stereo amp and really cheap but the sound was really full of noise.
+The Spark fun version has a good sound quality and has all the necessary hole to solder and integrate in you project.   
+The feature I really appreciate of the Sparkfun board is the possibility to really easily change the gain resistors, see [Mono Audio Amplifier Quickstart Guide].
+I opted for two 10K resistors, so it does not come too loud when my 2 years daughter is playing with it.
+
+The [keypad] is also a product from Sparkfun. 
+
+For the battery I chose a 2600mAh power bank, with two usb connector, one for charge and one for power source.
+{% img none /images/2014-01-10/03.jpg 200 200 MBox %}
+
+All components are placed into a wood box I friend made for me and a piece of an old climbing rope is used as grab.
+In the back I also added an usb port to easily charge the power bank.   
+Here the inside of the MBox:   
+{% img none /images/2014-01-10/04.jpg 300 450 MBox %}   
+{% img none /images/2014-01-10/05.jpg 300 200 MBox %}
+{% img none /images/2014-01-10/06.jpg 300 200 MBox %}   
+{% img none /images/2014-01-10/07.jpg 300 200 MBox %}
+{% img none /images/2014-01-10/08.jpg 300 200 MBox %}
+
+The MBox is supporting sdcard FAT 16 or 32. 
+The SD card contains 12 directories named starting from 0 to 12. 
+Every button of the keypad is associated to a directory.
+A directory represents a play list and contains files (mp3 or wav) name with number, example: 1.mp3. 
+MBox play cyclic trough the play list by simple increase a counter and search for a file with that name. 
+Any time a button is pressed, if MBox is playing a different play list it simple switch to the associated play list and start playing file number 0 else simply play next file in order.
+The way how button work is not mine idea, is the way how the [hoerbert] works.
+
+My daughter is really happy about, playing quite a lot.
+I was really impressed to see how quick she was able to learn how to select the track she want to play, Thanks [hoerbert].
+
+
+[hoerbert]: http://en.hoerbert.com/
+[arduino board]: (http://arduino.cc/)
+[Freaduino MP3 Music Shield]:(http://www.elecfreaks.com/wiki/index.php?title=Freaduino_MP3_Music_Shield)
+[Sparkfun]: https://www.sparkfun.com/products/11044
+[Mono Audio Amp Breakout - TPA2005D1]: https://www.sparkfun.com/products/11044
+[Mono Audio Amplifier Quickstart Guide]:https://www.sparkfun.com/tutorials/392
+[keypad]: https://www.sparkfun.com/products/8653
