@@ -10,12 +10,12 @@
                                 <title>MBox</title>
                                 <description>&lt;p&gt;&lt;img class=&quot;none&quot; src=&quot;/images/2014-01-10/00.jpg&quot; width=&quot;300&quot; height=&quot;200&quot; title=&quot;MBox&quot; &gt;&lt;/p&gt;
 
-&lt;p&gt;Few months ago I bought, as a present, an mp3 player for children called &lt;a href=&quot;http://en.hoerbert.com/&quot;&gt;hoerbert&lt;/a&gt;.
+&lt;p&gt;Few months ago I bought, as a present, an mp3 player for children called &lt;a href=&quot;http://en.hoerbert.com/&quot;&gt;hörbert&lt;/a&gt;.
 It is really well made and the sound quality is pretty good. I really suggest as a product.
 The only problem is that is quite expensive, so I though that would be a nice and easy project for a Christmas present for my daughter.&lt;/p&gt;
 
-&lt;p&gt;It was already clear since the beginning that the project would be powered by an &lt;a href=&quot;(http://arduino.cc/)&quot;&gt;arduino board&lt;/a&gt;.
-So I start looking around in order to find a good way to play mp3 file with it and I found the &lt;a href=&quot;(http://www.elecfreaks.com/wiki/index.php?title=Freaduino_MP3_Music_Shield)&quot;&gt;Freaduino MP3 Music Shield&lt;/a&gt;.
+&lt;p&gt;It was already clear since the beginning that the project would be powered by an &lt;a href=&quot;http://arduino.cc/&quot;&gt;arduino uno&lt;/a&gt;.
+So I start looking around in order to find a good way to play mp3 file with it and I found the &lt;a href=&quot;http://www.elecfreaks.com/wiki/index.php?title=Freaduino_MP3_Music_Shield&quot;&gt;Freaduino MP3 Music Shield&lt;/a&gt;.
 It is the cheapest mp3 board I found for arduino.&lt;br&gt;
 The board contains an sd card slot, decodes &amp;quot;MP3,WAV,MIDI,Ogg Vorbis&amp;quot; and, they wrote, has an &amp;quot;Excellent sound quality with ±1dB Frequency Response&amp;quot;.
 Also the board is well documented on the wiki. They provide even a source code example for a very basic player.
@@ -52,10 +52,24 @@ Every button of the keypad is associated to a directory.
 A directory represents a play list and contains files (mp3 or wav) name with number, example: 1.mp3. 
 MBox play cyclic trough the play list by simple increase a counter and search for a file with that name. 
 Any time a button is pressed, if MBox is playing a different play list it simple switch to the associated play list and start playing file number 0 else simply play next file in order.
-The way how button work is not mine idea, is the way how the &lt;a href=&quot;http://en.hoerbert.com/&quot;&gt;hoerbert&lt;/a&gt; works.&lt;/p&gt;
+The way how button work is not mine idea, is the way how the &lt;a href=&quot;http://en.hoerbert.com/&quot;&gt;hörbert&lt;/a&gt; works.&lt;/p&gt;
 
 &lt;p&gt;My daughter is really happy about, playing quite a lot.
-I was really impressed to see how quick she was able to learn how to select the track she want to play, Thanks &lt;a href=&quot;http://en.hoerbert.com/&quot;&gt;hoerbert&lt;/a&gt;.&lt;/p&gt;
+I was really impressed to see how quick she was able to learn how to select the track she want to play, Thanks &lt;a href=&quot;http://en.hoerbert.com/&quot;&gt;hörbert&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Bill of materials:   &lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://arduino.cc/&quot;&gt;arduino uno&lt;/a&gt; &lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.elecfreaks.com/wiki/index.php?title=Freaduino_MP3_Music_Shield&quot;&gt;Freaduino MP3 Music Shield&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.sparkfun.com/products/11044&quot;&gt;Mono Audio Amp Breakout - TPA2005D1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;2 - 10KΩ resitors&lt;/li&gt;
+&lt;li&gt;Loudspeaker: Visaton FR 10 HM  8 Ω&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.sparkfun.com/products/8653&quot;&gt;keypad&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;2KΩ potentiometer&lt;/li&gt;
+&lt;li&gt;Switch on/off&lt;/li&gt;
+&lt;li&gt;USB power bank&lt;/li&gt;
+&lt;/ul&gt;
 </description>
                                 <pubDate>Fri, 10 Jan 2014 22:30:00 +0000</pubDate>
                                 <link>//hack/arduino/2014/01/10/mbox-01.html</link>
