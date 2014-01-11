@@ -1,0 +1,13 @@
+#!/bin/bash
+
+jekyll build
+
+git checkout master
+
+git add -A
+
+
+STATUS=$(git status)
+git commit -a -m "sync master, status: ${STATUS}"
+
+git checkout source
