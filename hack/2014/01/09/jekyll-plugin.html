@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>{{ site.name }}</title>
-    <meta name="description" content="{{ site.description }}">
+    <title>Arons occasionally writes.</title>
+    <meta name="description" content="Arons occasionally writes.">
 
     <link href="/css/my.css" rel="stylesheet">
 
@@ -97,7 +97,33 @@
            -->
            
           <div class="row">
-            {{ content }}
+            <div >
+	<h2>Jekyll Plugin</h2>
+	<p class="meta">09 Jan 2014</p>
+	<div class="post">
+	<p>I&#39;m testing a jekyll you tube plugin I found <a href="https://gist.github.com/joelverhagen/1805814">here</a>.
+It runs well on local preview:</p>
+
+<div class="highlight"><pre><code class="bash"> <span class="nv">$ </span>jekyll server 
+</code></pre></div>
+
+<p>but after I push it on github I received a Page build failure email.</p>
+
+<p>A fast search and I found that github pages does not support <a href="https://help.github.com/articles/pages-don-t-build-unable-to-run-jekyll">unsafe plugins</a>.</p>
+
+<p>Before push your new post to github is a good practice to build you site in safe mode and check for errors:</p>
+
+<div class="highlight"><pre><code class="bash"> <span class="nv">$ </span>jekyll build --safe 
+</code></pre></div>
+ 
+
+<p>Of course in that case the plugin is really unnecessary so I&#39;ve removed the plugin and add the html code myself as suggested by gitthub.</p>
+
+<p>Here is the result, my &quot;little&quot; sister playing for  Lucca  Philharmonic Orchestra:
+<p><iframe width="560" height="420" src="http://www.youtube.com/embed/tO13X2hEWK0?color=white&theme=light"></iframe> </p></p>
+
+	</div>
+</div><!--/span-->
           </div><!--/row-->
         </div><!--/span-->
 

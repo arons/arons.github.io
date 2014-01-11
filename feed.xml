@@ -1,21 +1,165 @@
----
-layout: none
----
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
         <channel>
-                <title>{{ site.name | xml_escape }}</title>
-                <description>{{ site.description | xml_escape }}</description>
-                <link>{{ site.url }}</link>
-                <atom:link href="{{ site.url }}/feed.xml" rel="self" type="application/rss+xml" />
-                {% for post in site.posts limit:10 %}
+                <title>Arons occasionally writes.</title>
+                <description>Arons occasionally writes.</description>
+                <link></link>
+                <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
+                
                         <item>
-                                <title>{{ post.title | xml_escape }}</title>
-                                <description>{{ post.content | xml_escape }}</description>
-                                <pubDate>{{ post.date | date: "%a, %d %b %Y %H:%M:%S %z" }}</pubDate>
-                                <link>{{ site.url }}/{{ post.url }}</link>
-                                <guid isPermaLink="true">{{ site.url }}/{{ post.url }}</guid>
+                                <title>MBox</title>
+                                <description>&lt;p&gt;&lt;img class=&quot;none&quot; src=&quot;/images/2014-01-10/00.jpg&quot; width=&quot;300&quot; height=&quot;200&quot; title=&quot;MBox&quot; &gt;&lt;/p&gt;
+
+&lt;p&gt;Few months ago I bought, as a present, an mp3 player for children called &lt;a href=&quot;http://en.hoerbert.com/&quot;&gt;hoerbert&lt;/a&gt;.
+It is really well made and the sound quality is pretty good. I really suggest as a product.
+The only problem is that is quite expensive, so I though that would be a nice and easy project for a Christmas present for my daughter.&lt;/p&gt;
+
+&lt;p&gt;It was already clear since the beginning that the project would be powered by an &lt;a href=&quot;(http://arduino.cc/)&quot;&gt;arduino board&lt;/a&gt;.
+So I start looking around in order to find a good way to play mp3 file with it and I found the &lt;a href=&quot;(http://www.elecfreaks.com/wiki/index.php?title=Freaduino_MP3_Music_Shield)&quot;&gt;Freaduino MP3 Music Shield&lt;/a&gt;.
+It is the cheapest mp3 board I found for arduino.&lt;br&gt;
+The board contains an sd card slot, decodes &amp;quot;MP3,WAV,MIDI,Ogg Vorbis&amp;quot; and, they wrote, has an &amp;quot;Excellent sound quality with ±1dB Frequency Response&amp;quot;.
+Also the board is well documented on the wiki. They provide even a source code example for a very basic player.
+The only doubt I had was that there was almost no other resources in internet about it, specially if compared to other boards.   &lt;/p&gt;
+
+&lt;p&gt;Than was the time to choose a mono audio amp (I didn&amp;#39;t want to spent time to build one my selfe).&lt;br&gt;
+I ordered two mono amp, one from China(left) and one from &lt;a href=&quot;https://www.sparkfun.com/products/11044&quot;&gt;Sparkfun&lt;/a&gt;(right).&lt;/p&gt;
+
+&lt;p&gt;&lt;img class=&quot;left&quot; src=&quot;/images/2014-01-10/01.jpg&quot; width=&quot;300&quot; height=&quot;200&quot; title=&quot;Stereo amp from China&quot; &gt;
+&lt;img class=&quot;right&quot; src=&quot;/images/2014-01-10/02.jpg&quot; width=&quot;300&quot; height=&quot;200&quot; title=&quot;TPA2005D1 from Sparkfun installed on mBox&quot; &gt;&lt;/p&gt;
+
+&lt;p&gt;The Chinese version is a stereo amp and really cheap but the sound was really full of noise.
+The Spark fun version has a good sound quality and has all the necessary hole to solder and integrate in you project.&lt;br&gt;
+The feature I really appreciate of the Sparkfun board is the possibility to really easily change the gain resistors, see &lt;a href=&quot;https://www.sparkfun.com/tutorials/392&quot;&gt;Mono Audio Amplifier Quickstart Guide&lt;/a&gt;.
+I opted for two 10K resistors, so it does not come too loud when my 2 years daughter is playing with it.&lt;/p&gt;
+
+&lt;p&gt;The &lt;a href=&quot;https://www.sparkfun.com/products/8653&quot;&gt;keypad&lt;/a&gt; is also a product from Sparkfun. &lt;/p&gt;
+
+&lt;p&gt;For the battery I chose a 2600mAh power bank, with two usb connector, one for charge and one for power source.
+&lt;img class=&quot;none&quot; src=&quot;/images/2014-01-10/03.jpg&quot; width=&quot;200&quot; height=&quot;200&quot; title=&quot;MBox&quot; &gt;&lt;/p&gt;
+
+&lt;p&gt;All components are placed into a wood box I friend made for me and a piece of an old climbing rope is used as grab.
+In the back I also added an usb port to easily charge the power bank.&lt;br&gt;
+Here the inside of the MBox:&lt;br&gt;
+&lt;img class=&quot;none&quot; src=&quot;/images/2014-01-10/04.jpg&quot; width=&quot;300&quot; height=&quot;450&quot; title=&quot;MBox&quot; &gt;&lt;br&gt;
+&lt;img class=&quot;none&quot; src=&quot;/images/2014-01-10/05.jpg&quot; width=&quot;300&quot; height=&quot;200&quot; title=&quot;MBox&quot; &gt;
+&lt;img class=&quot;none&quot; src=&quot;/images/2014-01-10/06.jpg&quot; width=&quot;300&quot; height=&quot;200&quot; title=&quot;MBox&quot; &gt;&lt;br&gt;
+&lt;img class=&quot;none&quot; src=&quot;/images/2014-01-10/07.jpg&quot; width=&quot;300&quot; height=&quot;200&quot; title=&quot;MBox&quot; &gt;
+&lt;img class=&quot;none&quot; src=&quot;/images/2014-01-10/08.jpg&quot; width=&quot;300&quot; height=&quot;200&quot; title=&quot;MBox&quot; &gt;&lt;/p&gt;
+
+&lt;p&gt;The MBox is supporting sdcard FAT 16 or 32. 
+The SD card contains 12 directories named starting from 0 to 12. 
+Every button of the keypad is associated to a directory.
+A directory represents a play list and contains files (mp3 or wav) name with number, example: 1.mp3. 
+MBox play cyclic trough the play list by simple increase a counter and search for a file with that name. 
+Any time a button is pressed, if MBox is playing a different play list it simple switch to the associated play list and start playing file number 0 else simply play next file in order.
+The way how button work is not mine idea, is the way how the &lt;a href=&quot;http://en.hoerbert.com/&quot;&gt;hoerbert&lt;/a&gt; works.&lt;/p&gt;
+
+&lt;p&gt;My daughter is really happy about, playing quite a lot.
+I was really impressed to see how quick she was able to learn how to select the track she want to play, Thanks &lt;a href=&quot;http://en.hoerbert.com/&quot;&gt;hoerbert&lt;/a&gt;.&lt;/p&gt;
+</description>
+                                <pubDate>Fri, 10 Jan 2014 22:30:00 +0000</pubDate>
+                                <link>//hack/arduino/2014/01/10/mbox-01.html</link>
+                                <guid isPermaLink="true">//hack/arduino/2014/01/10/mbox-01.html</guid>
                         </item>
-                {% endfor %}
+                
+                        <item>
+                                <title>Jekyll Plugin</title>
+                                <description>&lt;p&gt;I&amp;#39;m testing a jekyll you tube plugin I found &lt;a href=&quot;https://gist.github.com/joelverhagen/1805814&quot;&gt;here&lt;/a&gt;.
+It runs well on local preview:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt; &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;jekyll server 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;but after I push it on github I received a Page build failure email.&lt;/p&gt;
+
+&lt;p&gt;A fast search and I found that github pages does not support &lt;a href=&quot;https://help.github.com/articles/pages-don-t-build-unable-to-run-jekyll&quot;&gt;unsafe plugins&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Before push your new post to github is a good practice to build you site in safe mode and check for errors:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt; &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;jekyll build --safe 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ 
+
+&lt;p&gt;Of course in that case the plugin is really unnecessary so I&amp;#39;ve removed the plugin and add the html code myself as suggested by gitthub.&lt;/p&gt;
+
+&lt;p&gt;Here is the result, my &amp;quot;little&amp;quot; sister playing for  Lucca  Philharmonic Orchestra:
+&lt;p&gt;&lt;iframe width=&quot;560&quot; height=&quot;420&quot; src=&quot;http://www.youtube.com/embed/tO13X2hEWK0?color=white&amp;theme=light&quot;&gt;&lt;/iframe&gt; &lt;/p&gt;&lt;/p&gt;
+</description>
+                                <pubDate>Thu, 09 Jan 2014 22:30:00 +0000</pubDate>
+                                <link>//hack/2014/01/09/jekyll-plugin.html</link>
+                                <guid isPermaLink="true">//hack/2014/01/09/jekyll-plugin.html</guid>
+                        </item>
+                
+                        <item>
+                                <title>Acoustic cryptanalysis</title>
+                                <description>&lt;p&gt;I found a really cool an scary article about cryptanalysis.
+They are able to attack GnuPG using a mobile phone microphone placed 30cm away of your pc.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.cs.tau.ac.il/%7Etromer/acoustic/&quot;&gt;read more&amp;gt;&amp;gt;&lt;/a&gt;&lt;/p&gt;
+</description>
+                                <pubDate>Thu, 09 Jan 2014 21:30:00 +0000</pubDate>
+                                <link>//hack/2014/01/09/acoustic-cryptanalysis.html</link>
+                                <guid isPermaLink="true">//hack/2014/01/09/acoustic-cryptanalysis.html</guid>
+                        </item>
+                
+                        <item>
+                                <title>Jekyll</title>
+                                <description>&lt;p&gt;This blog is based on [jekyll].
+I&amp;#39;ve choose this option after I discover &lt;a href=&quot;http://pages.github.com/&quot;&gt;github pages&lt;/a&gt;, where this blog is currently deployed.&lt;/p&gt;
+
+&lt;p&gt;With github pages you can publish your post with a simple &lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt; &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git push 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Githup is using jekyll to generate automatically static contest from Markdown post.
+I was looking for a simple static blog generator, so, cause I like github, I decided to give it a try.&lt;/p&gt;
+
+&lt;p&gt;The first impression it that it looks quite simple,powerful and well used. &lt;/p&gt;
+
+&lt;p&gt;Jekyll installation is quite simple:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;install ruby and rubygems. Remember to add  in your path: 
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt; &lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;ruby -rubygems -e &lt;span class=&quot;s2&quot;&gt;&amp;quot;puts Gem.user_dir&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;/bin 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;install jekyll: 
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt; &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;gem install jekyll -V 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Here jekyll quite start &lt;a href=&quot;http://jekyllrb.com/docs/quickstart/&quot;&gt;guide&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;After installation I generate my template using &lt;a href=&quot;http://getbootstrap.com/&quot;&gt;bootstrap&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Other links:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/mojombo/jekyll&quot;&gt;jekyll github repo&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://help.github.com/articles/using-jekyll-with-pages&quot;&gt;Using Jekyll with Pages&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+                                <pubDate>Thu, 09 Jan 2014 21:00:00 +0000</pubDate>
+                                <link>//jekyll/install/2014/01/09/jekyll.html</link>
+                                <guid isPermaLink="true">//jekyll/install/2014/01/09/jekyll.html</guid>
+                        </item>
+                
+                        <item>
+                                <title>Welcome</title>
+                                <description>&lt;p&gt;This is my first post.&lt;/p&gt;
+
+&lt;p&gt;Why I decided to start a sort of blog? 
+Don&amp;#39;t really know the right answer. I think the most obvious is to share my current readings and findings, 
+but also I think can be a nice way to index them.&lt;/p&gt;
+
+&lt;p&gt;Not really sure now how long I&amp;#39;ll keep writing...hope this will be worth it.&lt;/p&gt;
+
+&lt;p&gt;p.s. it is also a good way to improve my English skills  &lt;/p&gt;
+</description>
+                                <pubDate>Thu, 09 Jan 2014 18:00:00 +0000</pubDate>
+                                <link>//jekyll/welcome/2014/01/09/welcome.html</link>
+                                <guid isPermaLink="true">//jekyll/welcome/2014/01/09/welcome.html</guid>
+                        </item>
+                
         </channel>
 </rss>
