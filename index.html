@@ -210,26 +210,26 @@ It is really well made and the sound quality is pretty good. I really suggest as
 The only problem is that is quite expensive, so I though that would be a nice and easy project for a Christmas present for my daughter.</p>
 
 <p>It was already clear since the beginning that the project would be powered by an <a href="http://arduino.cc/">arduino uno</a>.
-So I start looking around in order to find a good way to play mp3 file with it and I found the <a href="http://www.elecfreaks.com/wiki/index.php?title=Freaduino_MP3_Music_Shield">Freaduino MP3 Music Shield</a>.
-It is the cheapest mp3 board I found for arduino.<br>
+So I started looking around in order to find a good way to play mp3 files with arduino and I found the <a href="http://www.elecfreaks.com/wiki/index.php?title=Freaduino_MP3_Music_Shield">Freaduino MP3 Music Shield</a>.
+It is the cheapest mp3 board I found.<br>
 The board contains an sd card slot, decodes &quot;MP3,WAV,MIDI,Ogg Vorbis&quot; and, they wrote, has an &quot;Excellent sound quality with ±1dB Frequency Response&quot;.
 Also the board is well documented on the wiki. They provide even a source code example for a very basic player.
 The only doubt I had was that there was almost no other resources in internet about it, specially if compared to other boards.   </p>
 
 <p>Than was the time to choose a mono audio amp (I didn&#39;t want to spent time to build one my selfe).<br>
-I ordered two mono amp, one from China(left) and one from <a href="https://www.sparkfun.com/products/11044">Sparkfun</a>(right).</p>
+I ordered two amps, one from China(left) and one from <a href="https://www.sparkfun.com/products/11044">Sparkfun</a>(right).</p>
 
 <p><img class="left" src="/images/2014-01-10/01.jpg" width="300" height="200" title="Stereo amp from China" >
 <img class="right" src="/images/2014-01-10/02.jpg" width="300" height="200" title="TPA2005D1 from Sparkfun installed on mBox" ></p>
 
-<p>The Chinese version is a stereo amp and really cheap but the sound was really full of noise.
-The Spark fun version has a good sound quality and has all the necessary hole to solder and integrate in you project.<br>
+<p>The Chinese version is a stereo amp, really cheap, but the sound was really full of noise.
+The Spark fun version has a good sound quality and has all the necessary holes for solder in order to be easily integrate in you project.<br>
 The feature I really appreciate of the Sparkfun board is the possibility to really easily change the gain resistors, see <a href="https://www.sparkfun.com/tutorials/392">Mono Audio Amplifier Quickstart Guide</a>.
 I opted for two 10K resistors, so it does not come too loud when my 2 years daughter is playing with it.</p>
 
 <p>The <a href="https://www.sparkfun.com/products/8653">keypad</a> is also a product from Sparkfun. </p>
 
-<p>For the battery I chose a 2600mAh power bank, with two usb connector, one for charge and one for power source.
+<p>For the battery I chose a 2600mAh power bank, with two usb connectors, one for charging and one for power source.
 <img class="none" src="/images/2014-01-10/03.jpg" width="200" height="200" title="MBox" ></p>
 
 <p>All components are placed into a wood box I friend made for me and a piece of an old climbing rope is used as grab.
@@ -244,13 +244,13 @@ Here the inside of the MBox:<br>
 <p>The MBox is supporting sdcard FAT 16 or 32. 
 The SD card contains 12 directories named starting from 0 to 12. 
 Every button of the keypad is associated to a directory.
-A directory represents a play list and contains files (mp3 or wav) name with number, example: 1.mp3. 
-MBox play cyclic trough the play list by simple increase a counter and search for a file with that name. 
+A directory represents a play list and contains files (mp3 or wav) name with number, example: 1.mp3.<br>
+MBox plays cyclic trough the play list by simple increase a counter and search for a file with that name. 
 Any time a button is pressed, if MBox is playing a different play list it simple switch to the associated play list and start playing file number 0 else simply play next file in order.
 The way how button work is not mine idea, is the way how the <a href="http://en.hoerbert.com/">hörbert</a> works.</p>
 
-<p>My daughter is really happy about, playing quite a lot.
-I was really impressed to see how quick she was able to learn how to select the track she want to play, Thanks <a href="http://en.hoerbert.com/">hörbert</a>.</p>
+<p>My daughter is really happy and she is using quite a lot.
+I was really impressed to see how quick she was able to learn how to select the track she wants to play, Thanks <a href="http://en.hoerbert.com/">hörbert</a>.</p>
 
 <p>Bill of materials:   </p>
 
@@ -264,6 +264,8 @@ I was really impressed to see how quick she was able to learn how to select the 
 <li>2KΩ potentiometer</li>
 <li>Switch on/off</li>
 <li>USB power bank</li>
+<li>wood</li>
+<li>piece of an old climbing rope</li>
 </ul>
 </p>
 
