@@ -30,9 +30,12 @@ title: AronsBlog
   <p><a href="{{ post.url }}">readmore>></a></p>
 {% endfor %}
  -->
-
+ 
 {% for post in site.posts %}
   <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
-  <span>{{ post.date | date_to_string }}</span>
+  <span>
+    {{ post.date | date_to_string }}
+    <div class="g-plusone" data-size="small" data-href="{{ post.url }}"></div>
+  </span>
   <p>{{ post.content }}</p>
 {% endfor %}
