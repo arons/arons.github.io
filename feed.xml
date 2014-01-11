@@ -46,7 +46,7 @@ Here the inside of the MBox:&lt;br&gt;
 &lt;img class=&quot;none&quot; src=&quot;/images/2014-01-10/07.jpg&quot; width=&quot;300&quot; height=&quot;200&quot; title=&quot;MBox&quot; &gt;
 &lt;img class=&quot;none&quot; src=&quot;/images/2014-01-10/08.jpg&quot; width=&quot;300&quot; height=&quot;200&quot; title=&quot;MBox&quot; &gt;&lt;/p&gt;
 
-&lt;p&gt;The MBox is supporting sdcard FAT 16 or 32. 
+&lt;p&gt;The MBox is supporting SD card FAT 16 or 32. 
 The SD card contains 12 directories named starting from 0 to 12. 
 Every button of the keypad is associated to a directory.
 A directory represents a play list and contains files (mp3 or wav) name with number, example: 1.mp3.&lt;br&gt;
