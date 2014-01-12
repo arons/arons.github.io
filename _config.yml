@@ -7,7 +7,7 @@ markdown: redcarpet
 lsi: false
 pygments: true
 
-#url: http://arons.github.io
+url: http://arons.github.io
 
 #paginate: 10
 
