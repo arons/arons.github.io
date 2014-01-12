@@ -12,7 +12,7 @@
 
 &lt;p&gt;Few months ago I bought, as a present, an mp3 player for children called &lt;a href=&quot;http://en.hoerbert.com/&quot;&gt;hörbert&lt;/a&gt;.
 It is really well made and the sound quality is pretty good. I really suggest as a product.
-The only problem is that is quite expensive, so I though that would be a nice and easy project for a Christmas present for my daughter.&lt;/p&gt;
+The only problem is that it is quite expensive, so I thought that it would be a nice and easy project for a Christmas present for my daughter.&lt;/p&gt;
 
 &lt;p&gt;It was already clear since the beginning that the project would be powered by an &lt;a href=&quot;http://arduino.cc/&quot;&gt;arduino uno&lt;/a&gt;.
 So I started looking around in order to find a good way to play mp3 files with arduino and I found the &lt;a href=&quot;http://www.elecfreaks.com/wiki/index.php?title=Freaduino_MP3_Music_Shield&quot;&gt;Freaduino MP3 Music Shield&lt;/a&gt;.
