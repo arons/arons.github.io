@@ -3,8 +3,8 @@
         <channel>
                 <title>Arons occasionally writes.</title>
                 <description>Arons occasionally writes.</description>
-                <link></link>
-                <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
+                <link>http://arons.github.io</link>
+                <atom:link href="http://arons.github.io/feed.xml" rel="self" type="application/rss+xml" />
                 
                         <item>
                                 <title>MBox</title>
@@ -74,8 +74,8 @@ I was really impressed to see how quick she was able to learn how to select the 
 &lt;/ul&gt;
 </description>
                                 <pubDate>Fri, 10 Jan 2014 22:30:00 +0000</pubDate>
-                                <link>//hack/arduino/2014/01/10/mbox-01.html</link>
-                                <guid isPermaLink="true">//hack/arduino/2014/01/10/mbox-01.html</guid>
+                                <link>http://arons.github.io//hack/arduino/2014/01/10/mbox-01.html</link>
+                                <guid isPermaLink="true">http://arons.github.io//hack/arduino/2014/01/10/mbox-01.html</guid>
                         </item>
                 
                         <item>
@@ -102,8 +102,8 @@ It runs well on local preview:&lt;/p&gt;
 &lt;p&gt;&lt;iframe width=&quot;560&quot; height=&quot;420&quot; src=&quot;http://www.youtube.com/embed/tO13X2hEWK0?color=white&amp;theme=light&quot;&gt;&lt;/iframe&gt; &lt;/p&gt;&lt;/p&gt;
 </description>
                                 <pubDate>Thu, 09 Jan 2014 22:30:00 +0000</pubDate>
-                                <link>//hack/2014/01/09/jekyll-plugin.html</link>
-                                <guid isPermaLink="true">//hack/2014/01/09/jekyll-plugin.html</guid>
+                                <link>http://arons.github.io//hack/2014/01/09/jekyll-plugin.html</link>
+                                <guid isPermaLink="true">http://arons.github.io//hack/2014/01/09/jekyll-plugin.html</guid>
                         </item>
                 
                         <item>
@@ -114,8 +114,8 @@ They are able to attack GnuPG using a mobile phone microphone placed 30cm away o
 &lt;p&gt;&lt;a href=&quot;http://www.cs.tau.ac.il/%7Etromer/acoustic/&quot;&gt;read more&amp;gt;&amp;gt;&lt;/a&gt;&lt;/p&gt;
 </description>
                                 <pubDate>Thu, 09 Jan 2014 21:30:00 +0000</pubDate>
-                                <link>//hack/2014/01/09/acoustic-cryptanalysis.html</link>
-                                <guid isPermaLink="true">//hack/2014/01/09/acoustic-cryptanalysis.html</guid>
+                                <link>http://arons.github.io//hack/2014/01/09/acoustic-cryptanalysis.html</link>
+                                <guid isPermaLink="true">http://arons.github.io//hack/2014/01/09/acoustic-cryptanalysis.html</guid>
                         </item>
                 
                         <item>
@@ -156,8 +156,8 @@ I was looking for a simple static blog generator, so, cause I like github, I dec
 &lt;/ul&gt;
 </description>
                                 <pubDate>Thu, 09 Jan 2014 21:00:00 +0000</pubDate>
-                                <link>//jekyll/install/2014/01/09/jekyll.html</link>
-                                <guid isPermaLink="true">//jekyll/install/2014/01/09/jekyll.html</guid>
+                                <link>http://arons.github.io//jekyll/install/2014/01/09/jekyll.html</link>
+                                <guid isPermaLink="true">http://arons.github.io//jekyll/install/2014/01/09/jekyll.html</guid>
                         </item>
                 
                         <item>
@@ -173,8 +173,8 @@ but also I think can be a nice way to index them.&lt;/p&gt;
 &lt;p&gt;p.s. it is also a good way to improve my English skills  &lt;/p&gt;
 </description>
                                 <pubDate>Thu, 09 Jan 2014 18:00:00 +0000</pubDate>
-                                <link>//jekyll/welcome/2014/01/09/welcome.html</link>
-                                <guid isPermaLink="true">//jekyll/welcome/2014/01/09/welcome.html</guid>
+                                <link>http://arons.github.io//jekyll/welcome/2014/01/09/welcome.html</link>
+                                <guid isPermaLink="true">http://arons.github.io//jekyll/welcome/2014/01/09/welcome.html</guid>
                         </item>
                 
         </channel>
