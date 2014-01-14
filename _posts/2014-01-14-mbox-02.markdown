@@ -1,0 +1,63 @@
+---
+layout: post
+title: MBox part 2 Software
+date: 2014-01-13 23:30:00
+categories: hack arduino
+---
+
+In the [previous post](http://arons.github.io/hack/arduino/2014/01/10/mbox-01.html)
+I've described the component used to build the MBox.   
+In this one I'll shortly describe the software.      
+I've release it on github: [MBox](https://github.com/arons/MBox).   
+
+
+First some more details about hardware:
+ 
++ I've removed the multifunction button from the mp3 board cause I didn't want to use it. All interaction is performed using the keypad.
++ I've removed also the two LEDs cause I needed some more free pins for the keypad. Also cause they are useless ones the board is enclosed into the MBox case.
++ The keypad is connected to digital pins 2 to 8. You also need to build a pull up resistors circuits as one like in the data sheet. 
+
+I've started by downloading this [source code](http://elecfreaks.com/store/download/datasheet/shield/mp3shield/MusicShieldNewSDLib.zip) 
+and remove all the unnecessary parts. 
+Than I've introduced some libraries:
+
++ The standard arduino SD library (you will find it under libraries directory of you arduino sdk installation) in order to support FAT 16 and 32.
++ [Keypad library](http://playground.arduino.cc/Code/Keypad) for interaction with the keypad.  
+
+The files config.h and config.cpp contain the whole configuration and initialization methods for the SPI, VS1053b(audio decoder) and keypad.
+
+Directory Structure:   
+The SD card should contains 12 directories numbered from 0 to 11. 
+Inside any directory the player expects to find files named with a consecutively number, starting by 0, plus an extensions: ".mp3" or ".wav".
+Here an example of a data structure:
+<pre>
+.
+├── 0
+|   ├── 0.mp3
+|   ├── 1.wav
+|   └── 2.wav
+|
+├── 1
+|   ├── 0.mp3
+|   ├── 1.mp3
+|   ├── 2.mp3
+|   └── 3.mp3
+.
+.
+.
+</pre> 
+
+The current directory and file number are stored respectively into dirN and fileN.
+At any iteration of the method play() the player checks if the current file exists. If yes it starts playing else restart the play list from the beginning.   
+It reads file data into a 32 byte buffer and transfer to the mp3 chip.  
+The audio decoder chip signals with a high DREQ pin, that it can receive data. For more details read the [VS1053b data sheet](https://www.sparkfun.com/datasheets/Components/SMD/vs1053.pdf)     
+During the time when the audio decoder chip is busy and it cannot receive any further data we can read the status of the keypad buttons.
+This is done into the method AvailableProcessorTime().    
+If a button is pressed the current playing song is stopped by setting the playStop variable to 0.   
+If the button is associated to the current play list then it simply increment the fileN variable in order to point to the next file.      
+If the button is associated to a different play list then the new play list number is saved into dirN and the variable fileN is reset to 0.
+ 
+Hope the code itself is simple and self explaining.
+
+
+

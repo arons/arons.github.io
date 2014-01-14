@@ -71,6 +71,9 @@ Bill of materials:
 + piece of an old climbing rope
 
 
+[next post](http://arons.github.io/hack/arduino/2014/01/14/mbox-02.html)
+
+
 [hörbert]: http://en.hoerbert.com/
 [arduino uno]: http://arduino.cc/
 [Freaduino MP3 Music Shield]: http://www.elecfreaks.com/wiki/index.php?title=Freaduino_MP3_Music_Shield
