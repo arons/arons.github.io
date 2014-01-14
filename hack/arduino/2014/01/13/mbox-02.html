@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Jekyll</title>
+    <title>MBox part 2 Software</title>
     <meta name="description" content="Arons occasionally writes.">
 
     <link href="/css/my.css" rel="stylesheet">
@@ -135,43 +135,65 @@
            
           <div class="row">
             <div >
-	<h2>Jekyll</h2>
-	<p class="meta">09 Jan 2014</p>
+	<h2>MBox part 2 Software</h2>
+	<p class="meta">13 Jan 2014</p>
 	<div class="post">
-	<p>This blog is based on [jekyll].
-I&#39;ve choose this option after I discover <a href="http://pages.github.com/">github pages</a>, where this blog is currently deployed.</p>
+	<p>In the <a href="http://arons.github.io/hack/arduino/2014/01/10/mbox-01.html">previous post</a>
+I&#39;ve described the component used to build the MBox.<br>
+In this one I&#39;ll shortly describe the software.<br>
+I&#39;ve release it on github: <a href="https://github.com/arons/MBox">MBox</a>.   </p>
 
-<p>With github pages you can publish your post with a simple </p>
-
-<div class="highlight"><pre><code class="bash"> <span class="nv">$ </span>git push 
-</code></pre></div>
-
-<p>Githup is using jekyll to generate automatically static contest from Markdown post.
-I was looking for a simple static blog generator, so, cause I like github, I decided to give it a try.</p>
-
-<p>The first impression it that it looks quite simple,powerful and well used. </p>
-
-<p>Jekyll installation is quite simple:</p>
+<p>First some more details about hardware:</p>
 
 <ul>
-<li><p>install ruby and rubygems. Remember to add  in your path: 
-<div class="highlight"><pre><code class="bash"> <span class="k">$(</span>ruby -rubygems -e <span class="s2">&quot;puts Gem.user_dir&quot;</span><span class="k">)</span>/bin 
-</code></pre></div></p></li>
-<li><p>install jekyll: 
-<div class="highlight"><pre><code class="bash"> <span class="nv">$ </span>gem install jekyll -V 
-</code></pre></div></p></li>
+<li>I&#39;ve removed the multifunction button from the mp3 board cause I didn&#39;t want to use it. All interaction is performed using the keypad.</li>
+<li>I&#39;ve removed also the two LEDs cause I needed some more free pins for the keypad. Also cause they are useless ones the board is enclosed into the MBox case.</li>
+<li>The keypad is connected to digital pins 2 to 8. You also need to build a pull up resistors circuits as one like in the data sheet. </li>
 </ul>
 
-<p>Here jekyll quite start <a href="http://jekyllrb.com/docs/quickstart/">guide</a>.</p>
-
-<p>After installation I generate my template using <a href="http://getbootstrap.com/">bootstrap</a>.</p>
-
-<p>Other links:</p>
+<p>I&#39;ve started by downloading this <a href="http://elecfreaks.com/store/download/datasheet/shield/mp3shield/MusicShieldNewSDLib.zip">source code</a> 
+and remove all the unnecessary parts. 
+Than I&#39;ve introduced some libraries:</p>
 
 <ul>
-<li><a href="https://github.com/mojombo/jekyll">jekyll github repo</a></li>
-<li><a href="https://help.github.com/articles/using-jekyll-with-pages">Using Jekyll with Pages</a></li>
+<li>The standard arduino SD library (you will find it under libraries directory of you arduino sdk installation) in order to support FAT 16 and 32.</li>
+<li><a href="http://playground.arduino.cc/Code/Keypad">Keypad library</a> for interaction with the keypad.<br></li>
 </ul>
+
+<p>The files config.h and config.cpp contain the whole configuration and initialization methods for the SPI, VS1053b(audio decoder) and keypad.</p>
+
+<p>Directory Structure:<br>
+The SD card should contains 12 directories numbered from 0 to 11. 
+Inside any directory the player expects to find files named with a consecutively number, starting by 0, plus an extensions: &quot;.mp3&quot; or &quot;.wav&quot;.
+Here an example of a data structure:
+<pre>
+.
+├── 0
+|   ├── 0.mp3
+|   ├── 1.wav
+|   └── 2.wav
+|
+├── 1
+|   ├── 0.mp3
+|   ├── 1.mp3
+|   ├── 2.mp3
+|   └── 3.mp3
+.
+.
+.
+</pre> </p>
+
+<p>The current directory and file number are stored respectively into dirN and fileN.
+At any iteration of the method play() the player checks if the current file exists. If yes it starts playing else restart the play list from the beginning.<br>
+It reads file data into a 32 byte buffer and transfer to the mp3 chip.<br>
+The audio decoder chip signals with a high DREQ pin, that it can receive data. For more details read the <a href="https://www.sparkfun.com/datasheets/Components/SMD/vs1053.pdf">VS1053b data sheet</a><br>
+During the time when the audio decoder chip is busy and it cannot receive any further data we can read the status of the keypad buttons.
+This is done into the method AvailableProcessorTime().<br>
+If a button is pressed the current playing song is stopped by setting the playStop variable to 0.<br>
+If the button is associated to the current play list then it simply increment the fileN variable in order to point to the next file.<br>
+If the button is associated to a different play list then the new play list number is saved into dirN and the variable fileN is reset to 0.</p>
+
+<p>Hope the code itself is simple and self explaining.</p>
 
 	</div>
 </div><!--/span-->

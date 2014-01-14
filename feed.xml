@@ -7,6 +7,70 @@
                 <atom:link href="http://arons.github.io/feed.xml" rel="self" type="application/rss+xml" />
                 
                         <item>
+                                <title>MBox part 2 Software</title>
+                                <description>&lt;p&gt;In the &lt;a href=&quot;http://arons.github.io/hack/arduino/2014/01/10/mbox-01.html&quot;&gt;previous post&lt;/a&gt;
+I&amp;#39;ve described the component used to build the MBox.&lt;br&gt;
+In this one I&amp;#39;ll shortly describe the software.&lt;br&gt;
+I&amp;#39;ve release it on github: &lt;a href=&quot;https://github.com/arons/MBox&quot;&gt;MBox&lt;/a&gt;.   &lt;/p&gt;
+
+&lt;p&gt;First some more details about hardware:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;I&amp;#39;ve removed the multifunction button from the mp3 board cause I didn&amp;#39;t want to use it. All interaction is performed using the keypad.&lt;/li&gt;
+&lt;li&gt;I&amp;#39;ve removed also the two LEDs cause I needed some more free pins for the keypad. Also cause they are useless ones the board is enclosed into the MBox case.&lt;/li&gt;
+&lt;li&gt;The keypad is connected to digital pins 2 to 8. You also need to build a pull up resistors circuits as one like in the data sheet. &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I&amp;#39;ve started by downloading this &lt;a href=&quot;http://elecfreaks.com/store/download/datasheet/shield/mp3shield/MusicShieldNewSDLib.zip&quot;&gt;source code&lt;/a&gt; 
+and remove all the unnecessary parts. 
+Than I&amp;#39;ve introduced some libraries:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The standard arduino SD library (you will find it under libraries directory of you arduino sdk installation) in order to support FAT 16 and 32.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://playground.arduino.cc/Code/Keypad&quot;&gt;Keypad library&lt;/a&gt; for interaction with the keypad.&lt;br&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The files config.h and config.cpp contain the whole configuration and initialization methods for the SPI, VS1053b(audio decoder) and keypad.&lt;/p&gt;
+
+&lt;p&gt;Directory Structure:&lt;br&gt;
+The SD card should contains 12 directories numbered from 0 to 11. 
+Inside any directory the player expects to find files named with a consecutively number, starting by 0, plus an extensions: &amp;quot;.mp3&amp;quot; or &amp;quot;.wav&amp;quot;.
+Here an example of a data structure:
+&lt;pre&gt;
+.
+├── 0
+|   ├── 0.mp3
+|   ├── 1.wav
+|   └── 2.wav
+|
+├── 1
+|   ├── 0.mp3
+|   ├── 1.mp3
+|   ├── 2.mp3
+|   └── 3.mp3
+.
+.
+.
+&lt;/pre&gt; &lt;/p&gt;
+
+&lt;p&gt;The current directory and file number are stored respectively into dirN and fileN.
+At any iteration of the method play() the player checks if the current file exists. If yes it starts playing else restart the play list from the beginning.&lt;br&gt;
+It reads file data into a 32 byte buffer and transfer to the mp3 chip.&lt;br&gt;
+The audio decoder chip signals with a high DREQ pin, that it can receive data. For more details read the &lt;a href=&quot;https://www.sparkfun.com/datasheets/Components/SMD/vs1053.pdf&quot;&gt;VS1053b data sheet&lt;/a&gt;&lt;br&gt;
+During the time when the audio decoder chip is busy and it cannot receive any further data we can read the status of the keypad buttons.
+This is done into the method AvailableProcessorTime().&lt;br&gt;
+If a button is pressed the current playing song is stopped by setting the playStop variable to 0.&lt;br&gt;
+If the button is associated to the current play list then it simply increment the fileN variable in order to point to the next file.&lt;br&gt;
+If the button is associated to a different play list then the new play list number is saved into dirN and the variable fileN is reset to 0.&lt;/p&gt;
+
+&lt;p&gt;Hope the code itself is simple and self explaining.&lt;/p&gt;
+</description>
+                                <pubDate>Mon, 13 Jan 2014 23:30:00 +0000</pubDate>
+                                <link>http://arons.github.io//hack/arduino/2014/01/13/mbox-02.html</link>
+                                <guid isPermaLink="true">http://arons.github.io//hack/arduino/2014/01/13/mbox-02.html</guid>
+                        </item>
+                
+                        <item>
                                 <title>MBox</title>
                                 <description>&lt;p&gt;&lt;img class=&quot;none&quot; src=&quot;/images/2014-01-10/00.jpg&quot; width=&quot;300&quot; height=&quot;200&quot; title=&quot;MBox&quot; &gt;&lt;/p&gt;
 
@@ -72,6 +136,8 @@ I was really impressed to see how quick she was able to learn how to select the 
 &lt;li&gt;wood&lt;/li&gt;
 &lt;li&gt;piece of an old climbing rope&lt;/li&gt;
 &lt;/ul&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://arons.github.io/hack/arduino/2014/01/14/mbox-02.html&quot;&gt;next post&lt;/a&gt;&lt;/p&gt;
 </description>
                                 <pubDate>Fri, 10 Jan 2014 22:30:00 +0000</pubDate>
                                 <link>http://arons.github.io//hack/arduino/2014/01/10/mbox-01.html</link>
