@@ -71,7 +71,7 @@ Bill of materials:
 + piece of an old climbing rope
 
 
-[next post](http://arons.github.io/hack/arduino/2014/01/14/mbox-02.html)
+[part 2 software](http://arons.github.io/hack/arduino/2014/01/14/mbox-02.html)
 
 
 [hörbert]: http://en.hoerbert.com/
