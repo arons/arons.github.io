@@ -7,6 +7,43 @@
                 <atom:link href="http://arons.github.io/feed.xml" rel="self" type="application/rss+xml" />
                 
                         <item>
+                                <title>DeLonghi KG79 Grinder</title>
+                                <description>&lt;p&gt;&lt;img class=&quot;left&quot; src=&quot;/images/2014-01-20/00.jpg&quot; width=&quot;200&quot; height=&quot;200&quot; title=&quot;DeLonghi KG79&quot; &gt;&lt;/p&gt;
+
+&lt;p&gt;Recently I bought the DeLonghi KG79 coffee grinder.&lt;br&gt;
+I thinks that cheap and middle price coffee grinder are not really able to grind your coffee for a good espresso.&lt;br&gt;
+So I decide for this grinder after I found this &lt;a href=&quot;http://geekandgrind.tumblr.com/post/17171106555/hacking-a-dehlonghi-coffee-grinder&quot;&gt;post&lt;/a&gt;
+and see that it can be easily modify.&lt;br&gt;
+This grinder is also quite cheap (I bought on amazon for 33 Euros).&lt;/p&gt;
+
+&lt;p&gt;I&amp;#39;m posting some more photos cause, even if the previous post is well made, I found some details are missing.&lt;br&gt;
+Specially about how the two know are hold in place and how you can better remove.   &lt;/p&gt;
+
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+
+&lt;p&gt;grind setting(side):&lt;br&gt;
+&lt;img class=&quot;none&quot; src=&quot;/images/2014-01-20/02.jpg&quot; width=&quot;200&quot; height=&quot;200&quot; title=&quot;grind setting(side)&quot; &gt;&lt;br&gt;
+there are 4 clips you can push using a screwdriver.   &lt;/p&gt;
+
+&lt;p&gt;cup setting(front):&lt;br&gt;
+&lt;img class=&quot;none&quot; src=&quot;/images/2014-01-20/04.jpg&quot; width=&quot;200&quot; height=&quot;200&quot; title=&quot;cup setting(front)&quot; &gt;&lt;br&gt;
+there is no clip, you have just to pull it. I found this one much more difficult to remove compared with the one on the side.   &lt;/p&gt;
+
+&lt;p&gt;I&amp;#39;ve used some tape to avoid scratches:&lt;br&gt;
+&lt;img class=&quot;none&quot; src=&quot;/images/2014-01-20/01.jpg&quot; width=&quot;200&quot; height=&quot;200&quot; title=&quot;tape&quot; &gt;&lt;br&gt;
+&lt;img class=&quot;none&quot; src=&quot;/images/2014-01-20/07.jpg&quot; width=&quot;200&quot; height=&quot;200&quot; title=&quot;simple turn it&quot; &gt;&lt;br&gt;
+Also I din&amp;#39;t cut the stop piece on the side, instead I have first set the grind settings to the finest set. 
+Than I&amp;#39;ve removed the 4 screws and simple turn the wheel to the middle position. 
+This will protect your grinder and, if you use the grinder for espresso only like me, you will never want to use it for a coarse coffee.&lt;/p&gt;
+
+&lt;p&gt;The result is really good, the coffee is really fine and, even if the container is just plastic, static electricity is not a problem.&lt;/p&gt;
+</description>
+                                <pubDate>Mon, 20 Jan 2014 23:00:00 +0000</pubDate>
+                                <link>http://arons.github.io//hack/2014/01/20/grinder.html</link>
+                                <guid isPermaLink="true">http://arons.github.io//hack/2014/01/20/grinder.html</guid>
+                        </item>
+                
+                        <item>
                                 <title>MBox part 2 Software</title>
                                 <description>&lt;p&gt;In the &lt;a href=&quot;http://arons.github.io/hack/arduino/2014/01/10/mbox-01.html&quot;&gt;previous post&lt;/a&gt;
 I&amp;#39;ve described the component used to build the MBox.&lt;br&gt;
