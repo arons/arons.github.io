@@ -1,0 +1,39 @@
+---
+layout: post
+title: DeLonghi KG79 Grinder
+date: 2014-01-20 23:00:00
+categories: hack
+---
+
+{% img left /images/2014-01-20/00.jpg 200 200 DeLonghi KG79 %}
+
+Recently I bought the DeLonghi KG79 coffee grinder.    
+I thinks that cheap and middle price coffee grinder are not really able to grind your coffee for a good espresso.   
+So I decide for this grinder after I found this [post](http://geekandgrind.tumblr.com/post/17171106555/hacking-a-dehlonghi-coffee-grinder)
+and see that it can be easily modify.   
+This grinder is also quite cheap (I bought on amazon for 33 Euros).
+
+I'm posting some more photos cause, even if the previous post is well made, I found some details are missing.   
+Specially about how the two know are hold in place and how you can better remove.   
+
+
+<br>
+
+
+grind setting(side):   
+{% img none /images/2014-01-20/02.jpg 200 200 grind setting(side) %}       
+there are 4 clips you can push using a screwdriver.   
+
+cup setting(front):   
+{% img none /images/2014-01-20/04.jpg 200 200 cup setting(front) %}   
+there is no clip, you have just to pull it. I found this one much more difficult to remove compared with the one on the side.   
+
+I've used some tape to avoid scratches:   
+{% img none /images/2014-01-20/01.jpg 200 200  tape %}      
+{% img none /images/2014-01-20/07.jpg 200 200  simple turn it %}       
+Also I din't cut the stop piece on the side, instead I have first set the grind settings to the finest set. 
+Than I've removed the 4 screws and simple turn the wheel to the middle position. 
+This will protect your grinder and, if you use the grinder for espresso only like me, you will never want to use it for a coarse coffee.
+
+The result is really good, the coffee is really fine and, even if the container is just plastic, static electricity is not a problem.
+  
