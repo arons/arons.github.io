@@ -2,11 +2,13 @@
 http://schacon.github.io/blog.html
 https://github.com/schacon/schacon.github.com
 
-http://jekyllrb.com/
+Jekyll:
+    http://jekyllrb.com/
+    http://wintersmith.io/
+    https://learn.andrewmunsell.com/learn/jekyll-by-example/tutorial
 
-
-http://wintersmith.io/
-
-https://learn.andrewmunsell.com/learn/jekyll-by-example/tutorial
-
-http://getbootstrap.com/components/
+Bootstrap:
+    http://getbootstrap.com/components/
+    
+Markdown references:    
+    http://daringfireball.net/projects/markdown/basics

@@ -7,6 +7,185 @@
                 <atom:link href="http://arons.github.io/feed.xml" rel="self" type="application/rss+xml" />
                 
                         <item>
+                                <title>Roadworrios Ipsec VPN with SSL certificate authentication</title>
+                                <description>&lt;p&gt;I was trying to set up a vpn server to allow multiple roadwarrior users in our company to access our internal network.&lt;br&gt;
+We are using &lt;a href=&quot;https://www.openswan.org/&quot;&gt;openswan&lt;/a&gt; installed on an &lt;a href=&quot;http://www.pcengines.ch/alix.htm&quot;&gt;alix board&lt;/a&gt;
+and I found that there is bit of a lack of documentation about how to configure it on openswan.&lt;br&gt;
+Specially we tried at first to set up a roadwarrior configuration with PSK and we discover that it is not possible to have simultaneous connection for different users.&lt;/p&gt;
+
+&lt;p&gt;This procedure explains how to create a roadwarrior configuration with SSL-certificates authentication (that allow also simultaneous connection).&lt;br&gt;
+We generate the Certification Authority itself and sign the certs with the CA afterwards.&lt;br&gt;
+This can also be done by a free Certification Authority like CaCert.&lt;/p&gt;
+
+&lt;p&gt;Here some good reads:   &lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Shrewsoft:&lt;a href=&quot;https://www.shrew.net/support/Howto_OpenSWAN&quot;&gt;Howto_OpenSWAN&lt;/a&gt;&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;Openswan: &lt;a href=&quot;http://books.google.ch/books?id=GMUwICWXlCAC&amp;amp;pg=PA92&amp;amp;lpg=PA92&amp;amp;dq=openswan+multiple+roadwarriors&amp;amp;source=bl&amp;amp;ots=7IKQ_Pi8AL&amp;amp;sig=hmtlyOKiyETm69JrWX0w7OM6ft4&amp;amp;hl=en&amp;amp;sa=X&amp;amp;ei=EVX7Uu-aOIG54ATAqIHIDg&amp;amp;ved=0CE8Q6AEwBQ#v=onepage&amp;amp;q=openswan%20multiple%20roadwarriors&amp;amp;f=true&quot;&gt;multiple roadwarrior&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Step by step example:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Create a the necessary directory structure for openssl&lt;br&gt;
+(may you want also to change openssl configuration, generally under /etc/ssl/openssl.cnf):
+&lt;pre&gt; 
+cd /etc/ipsec.d
+rm -rf ./demoCA
+mkdir demoCA
+mkdir demoCA/newcerts
+mkdir demoCA/private
+touch demoCA/index.txt
+echo &amp;quot;01&amp;quot; &amp;gt;&amp;gt; demoCA/serial
+&lt;/pre&gt;   &lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Create the CA (valid for 10 years)
+&lt;pre&gt; 
+openssl req -x509 -days 3650 -newkey rsa:2048 -keyout /etc/ipsec.d/private/caKey.pem -out /etc/ipsec.d/cacerts/caCert.pem
+&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Create a certification request for the server
+&lt;pre&gt;
+openssl req  -newkey rsa:2048 -keyout /etc/ipsec.d/private/serverKey.pem -out /etc/ipsec.d/private/serverReq.pem
+&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Convert the server key in order to be read by openswan
+&lt;pre&gt;
+openssl rsa -in /etc/ipsec.d/private/serverKey.pem -out /etc/ipsec.d/private/serverKey.pem.openswan
+&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Sign the certification request with our just created certification-authority (CA) (valid for 2 years)
+&lt;pre&gt;
+openssl ca -in /etc/ipsec.d/private/serverReq.pem -days 730 -out /etc/ipsec.d/certs/serverCert.pem -notext -cert /etc/ipsec.d/cacerts/caCert.pem -keyfile /etc/ipsec.d/private/caKey.pem
+&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Create a client certification request
+&lt;pre&gt;
+openssl req -newkey rsa:2048 -keyout /etc/ipsec.d/private/userAKey.pem  -out /etc/ipsec.d/private/userAReq.pem
+&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Sign the client certification request
+&lt;pre&gt;
+openssl ca -in /etc/ipsec.d/private/userAReq.pem -days 730 -out /etc/ipsec.d/certs/userACert.pem -notext -cert /etc/ipsec.d/cacerts/caCert.pem -keyfile /etc/ipsec.d/private/caKey.pem
+&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Add server private key, file /etc/ipsec.secrets:
+&lt;pre&gt;
+: RSA serverKey.pem.new &amp;quot;your password&amp;quot;
+&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Configure ipsec. Example /etc/ipsec.conf:
+&lt;pre&gt;
+conn roadwarriors&lt;em&gt;rsa
+    authby=rsasig
+    #
+    left=  ??? 
+    leftid=  ???
+    leftsubnet=  ???
+    leftrsasigkey=%cert
+    leftcert=serverCert.pem
+    #
+    right=%any
+    rightrsasigkey=%cert
+    # PHASE 1
+    # negothiation mode
+    aggrmode=no
+    ike=3des-sha1;modp1024,aes256-sha2&lt;/em&gt;256;modp2048
+    ikelifetime=3h
+    # PHASE 2
+    type=tunnel
+    phase2=esp
+    phase2alg=3des-sha1;modp1024
+    salifetime=3h&lt;/p&gt;
+
+&lt;p&gt;conn user&lt;em&gt;userA
+    also=roadwarriors&lt;/em&gt;rsa
+    rightid=@userA.yourdomani
+    rightsubnet=  ???
+    rightcert=userACert.pem
+    auto=add&lt;/p&gt;
+
+&lt;p&gt;conn user&lt;em&gt;userB
+    also=roadwarriors&lt;/em&gt;rsa
+    rightid=@userB.yourdomani
+    rightsubnet=  ???
+    rightcert=userBCert.pem
+    auto=add&lt;br&gt;
+&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;User A and B are two roadwarrior users that can connect at the same time to your server.&lt;/p&gt;
+
+&lt;p&gt;Here an example of a &lt;a href=&quot;https://www.shrew.net/&quot;&gt;shrewsoft&lt;/a&gt; client configuration for the above setting:&lt;/p&gt;
+
+&lt;pre&gt;
+n:version:2
+n:network-ike-port:500
+n:network-mtu-size:1380
+n:client-addr-auto:0
+n:network-natt-port:4500
+n:network-natt-rate:15
+n:network-frag-size:540
+n:network-dpd-enable:1
+n:client-banner-enable:0
+n:network-notify-enable:1
+n:client-wins-used:0
+n:client-wins-auto:0
+n:client-dns-used:1
+n:client-dns-auto:0
+n:client-splitdns-used:0
+n:client-splitdns-auto:0
+n:phase1-dhgroup:2
+n:phase1-life-secs:86400
+n:phase1-life-kbytes:0
+n:vendor-chkpt-enable:0
+n:phase2-life-secs:3600
+n:phase2-life-kbytes:0
+n:policy-nailed:0
+n:policy-list-auto:0
+s:network-host:  ???
+s:client-auto-mode:disabled
+s:client-iface:virtual
+s:client-ip-addr:  ???
+s:client-ip-mask:  ???
+s:network-natt-mode:enable
+s:network-frag-mode:enable
+s:client-dns-addr:  ???
+s:client-dns-suffix:  ???
+s:auth-method:mutual-rsa
+s:ident-client-type:fqdn
+s:ident-server-type:address
+s:ident-client-data:userA.yourdomain
+s:phase1-exchange:main
+s:phase1-cipher:3des
+s:phase1-hash:sha1
+s:phase2-transform:esp-3des
+s:phase2-hmac:sha1
+s:ipcomp-transform:disabled
+n:phase2-pfsgroup:2
+s:policy-level:auto
+s:policy-list-include:   ???
+s:auth-client-cert:userACert.pem
+b:auth-client-cert-data:   ???
+s:auth-client-key:userAKey.pem
+b:auth-client-key-data:   ???
+s:auth-server-cert:caCert.pem
+b:auth-server-cert-data:   ???
+&lt;/pre&gt;    
+
+&lt;p&gt;Some usefull shell command:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Check ipsec loaded your CA certifcates:
+&lt;pre&gt; ipsec auto --listcacerts&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Check ipsec loaded your certifcates:
+&lt;pre&gt; ipsec auto --listcerts&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;List loaded public keys:
+&lt;pre&gt; ipsec auto --listpubkeys&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Check a certifcate:
+&lt;pre&gt; openssl x509 -text -noout -in /etc/ipsec.d/cacerts/caCert.pem&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Check a Key:
+&lt;pre&gt; openssl rsa -in privateKey.key -check&lt;/pre&gt;    &lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+                                <pubDate>Fri, 28 Mar 2014 19:00:00 +0100</pubDate>
+                                <link>http://arons.github.io//hack/ipsec/vpn/ssl/2014/03/28/ipsec.html</link>
+                                <guid isPermaLink="true">http://arons.github.io//hack/ipsec/vpn/ssl/2014/03/28/ipsec.html</guid>
+                        </item>
+                
+                        <item>
                                 <title>DeLonghi KG79 Grinder</title>
                                 <description>&lt;p&gt;&lt;img class=&quot;left&quot; src=&quot;/images/2014-01-20/00.jpg&quot; width=&quot;200&quot; height=&quot;200&quot; title=&quot;DeLonghi KG79&quot; &gt;&lt;/p&gt;
 
@@ -38,9 +217,9 @@ This will protect your grinder and, if you use the grinder for espresso only lik
 
 &lt;p&gt;The result is really good, the coffee is really fine and, even if the container is just plastic, static electricity is not a problem.&lt;/p&gt;
 </description>
-                                <pubDate>Mon, 20 Jan 2014 23:00:00 +0000</pubDate>
-                                <link>http://arons.github.io//hack/2014/01/20/grinder.html</link>
-                                <guid isPermaLink="true">http://arons.github.io//hack/2014/01/20/grinder.html</guid>
+                                <pubDate>Tue, 21 Jan 2014 00:00:00 +0100</pubDate>
+                                <link>http://arons.github.io//hack/2014/01/21/grinder.html</link>
+                                <guid isPermaLink="true">http://arons.github.io//hack/2014/01/21/grinder.html</guid>
                         </item>
                 
                         <item>
@@ -102,9 +281,9 @@ If the button is associated to a different play list then the new play list numb
 
 &lt;p&gt;Hope the code itself is simple and self explaining.&lt;/p&gt;
 </description>
-                                <pubDate>Tue, 14 Jan 2014 23:30:00 +0000</pubDate>
-                                <link>http://arons.github.io//hack/arduino/2014/01/14/mbox-02.html</link>
-                                <guid isPermaLink="true">http://arons.github.io//hack/arduino/2014/01/14/mbox-02.html</guid>
+                                <pubDate>Wed, 15 Jan 2014 00:30:00 +0100</pubDate>
+                                <link>http://arons.github.io//hack/arduino/2014/01/15/mbox-02.html</link>
+                                <guid isPermaLink="true">http://arons.github.io//hack/arduino/2014/01/15/mbox-02.html</guid>
                         </item>
                 
                         <item>
@@ -176,7 +355,7 @@ I was really impressed to see how quick she was able to learn how to select the 
 
 &lt;p&gt;&lt;a href=&quot;http://arons.github.io/hack/arduino/2014/01/14/mbox-02.html&quot;&gt;part 2 software&lt;/a&gt;&lt;/p&gt;
 </description>
-                                <pubDate>Fri, 10 Jan 2014 22:30:00 +0000</pubDate>
+                                <pubDate>Fri, 10 Jan 2014 23:30:00 +0100</pubDate>
                                 <link>http://arons.github.io//hack/arduino/2014/01/10/mbox-01.html</link>
                                 <guid isPermaLink="true">http://arons.github.io//hack/arduino/2014/01/10/mbox-01.html</guid>
                         </item>
@@ -204,7 +383,7 @@ It runs well on local preview:&lt;/p&gt;
 &lt;p&gt;Here is the result, my &amp;quot;little&amp;quot; sister playing for  Lucca  Philharmonic Orchestra:
 &lt;p&gt;&lt;iframe width=&quot;560&quot; height=&quot;420&quot; src=&quot;http://www.youtube.com/embed/tO13X2hEWK0?color=white&amp;theme=light&quot;&gt;&lt;/iframe&gt; &lt;/p&gt;&lt;/p&gt;
 </description>
-                                <pubDate>Thu, 09 Jan 2014 22:30:00 +0000</pubDate>
+                                <pubDate>Thu, 09 Jan 2014 23:30:00 +0100</pubDate>
                                 <link>http://arons.github.io//hack/2014/01/09/jekyll-plugin.html</link>
                                 <guid isPermaLink="true">http://arons.github.io//hack/2014/01/09/jekyll-plugin.html</guid>
                         </item>
@@ -216,7 +395,7 @@ They are able to attack GnuPG using a mobile phone microphone placed 30cm away o
 
 &lt;p&gt;&lt;a href=&quot;http://www.cs.tau.ac.il/%7Etromer/acoustic/&quot;&gt;read more&amp;gt;&amp;gt;&lt;/a&gt;&lt;/p&gt;
 </description>
-                                <pubDate>Thu, 09 Jan 2014 21:30:00 +0000</pubDate>
+                                <pubDate>Thu, 09 Jan 2014 22:30:00 +0100</pubDate>
                                 <link>http://arons.github.io//hack/2014/01/09/acoustic-cryptanalysis.html</link>
                                 <guid isPermaLink="true">http://arons.github.io//hack/2014/01/09/acoustic-cryptanalysis.html</guid>
                         </item>
@@ -258,7 +437,7 @@ I was looking for a simple static blog generator, so, cause I like github, I dec
 &lt;li&gt;&lt;a href=&quot;https://help.github.com/articles/using-jekyll-with-pages&quot;&gt;Using Jekyll with Pages&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-                                <pubDate>Thu, 09 Jan 2014 21:00:00 +0000</pubDate>
+                                <pubDate>Thu, 09 Jan 2014 22:00:00 +0100</pubDate>
                                 <link>http://arons.github.io//jekyll/install/2014/01/09/jekyll.html</link>
                                 <guid isPermaLink="true">http://arons.github.io//jekyll/install/2014/01/09/jekyll.html</guid>
                         </item>
@@ -275,7 +454,7 @@ but also I think can be a nice way to index them.&lt;/p&gt;
 
 &lt;p&gt;p.s. it is also a good way to improve my English skills  &lt;/p&gt;
 </description>
-                                <pubDate>Thu, 09 Jan 2014 18:00:00 +0000</pubDate>
+                                <pubDate>Thu, 09 Jan 2014 19:00:00 +0100</pubDate>
                                 <link>http://arons.github.io//jekyll/welcome/2014/01/09/welcome.html</link>
                                 <guid isPermaLink="true">http://arons.github.io//jekyll/welcome/2014/01/09/welcome.html</guid>
                         </item>
