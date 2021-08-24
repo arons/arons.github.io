@@ -1,0 +1,179 @@
+<div class="w3-container">
+  <h3><b>Roadworrios Ipsec VPN with SSL certificate authentication</b></h3>
+  <h5><span class="w3-opacity">28 Mar 2014</span></h5>
+</div>
+
+<div class="w3-container">
+<p>I was trying to set up a vpn server to allow multiple roadwarrior users in our company to access our internal network.<br>
+We are using <a href="https://www.openswan.org/">openswan</a> installed on an <a href="http://www.pcengines.ch/alix.htm">alix board</a>
+and I found that there is bit of a lack of documentation about how to configure it on openswan.<br>
+Specially we tried at first to set up a roadwarrior configuration with PSK and we discover that it is not possible to have simultaneous connection for different users.</p>
+
+<p>This procedure explains how to create a roadwarrior configuration with SSL-certificates authentication (that allow also simultaneous connection).<br>
+We generate the Certification Authority itself and sign the certs with the CA afterwards.<br>
+This can also be done by a free Certification Authority like CaCert.</p>
+
+<p>Here some good reads:   </p>
+
+<ul>
+<li>Shrewsoft:<a href="https://www.shrew.net/support/Howto_OpenSWAN">Howto_OpenSWAN</a><br></li>
+<li>Openswan: <a href="http://books.google.ch/books?id=GMUwICWXlCAC&amp;pg=PA92&amp;lpg=PA92&amp;dq=openswan+multiple+roadwarriors&amp;source=bl&amp;ots=7IKQ_Pi8AL&amp;sig=hmtlyOKiyETm69JrWX0w7OM6ft4&amp;hl=en&amp;sa=X&amp;ei=EVX7Uu-aOIG54ATAqIHIDg&amp;ved=0CE8Q6AEwBQ#v=onepage&amp;q=openswan%20multiple%20roadwarriors&amp;f=true">multiple roadwarrior</a></li>
+</ul>
+
+<p>Step by step example:</p>
+
+<ol>
+<li><p>Create a the necessary directory structure for openssl<br>
+(may you want also to change openssl configuration, generally under /etc/ssl/openssl.cnf):
+<pre> 
+cd /etc/ipsec.d
+rm -rf ./demoCA
+mkdir demoCA
+mkdir demoCA/newcerts
+mkdir demoCA/private
+touch demoCA/index.txt
+echo &quot;01&quot; &gt;&gt; demoCA/serial
+</pre>   </p></li>
+<li><p>Create the CA (valid for 10 years)
+<pre> 
+openssl req -x509 -days 3650 -newkey rsa:2048 -keyout /etc/ipsec.d/private/caKey.pem -out /etc/ipsec.d/cacerts/caCert.pem
+</pre></p></li>
+<li><p>Create a certification request for the server
+<pre>
+openssl req  -newkey rsa:2048 -keyout /etc/ipsec.d/private/serverKey.pem -out /etc/ipsec.d/private/serverReq.pem
+</pre></p></li>
+<li><p>Convert the server key in order to be read by openswan
+<pre>
+openssl rsa -in /etc/ipsec.d/private/serverKey.pem -out /etc/ipsec.d/private/serverKey.pem.openswan
+</pre></p></li>
+<li><p>Sign the certification request with our just created certification-authority (CA) (valid for 2 years)
+<pre>
+openssl ca -in /etc/ipsec.d/private/serverReq.pem -days 730 -out /etc/ipsec.d/certs/serverCert.pem -notext -cert /etc/ipsec.d/cacerts/caCert.pem -keyfile /etc/ipsec.d/private/caKey.pem
+</pre></p></li>
+<li><p>Create a client certification request
+<pre>
+openssl req -newkey rsa:2048 -keyout /etc/ipsec.d/private/userAKey.pem  -out /etc/ipsec.d/private/userAReq.pem
+</pre></p></li>
+<li><p>Sign the client certification request
+<pre>
+openssl ca -in /etc/ipsec.d/private/userAReq.pem -days 730 -out /etc/ipsec.d/certs/userACert.pem -notext -cert /etc/ipsec.d/cacerts/caCert.pem -keyfile /etc/ipsec.d/private/caKey.pem
+</pre></p></li>
+<li><p>Add server private key, file /etc/ipsec.secrets:
+<pre>
+: RSA serverKey.pem.new &quot;your password&quot;
+</pre></p></li>
+<li><p>Configure ipsec. Example /etc/ipsec.conf:
+<pre>
+conn roadwarriors<em>rsa
+    authby=rsasig
+    #
+    left=  ??? 
+    leftid=  ???
+    leftsubnet=  ???
+    leftrsasigkey=%cert
+    leftcert=serverCert.pem
+    #
+    right=%any
+    rightrsasigkey=%cert
+    # PHASE 1
+    # negothiation mode
+    aggrmode=no
+    ike=3des-sha1;modp1024,aes256-sha2</em>256;modp2048
+    ikelifetime=3h
+    # PHASE 2
+    type=tunnel
+    phase2=esp
+    phase2alg=3des-sha1;modp1024
+    salifetime=3h</p>
+
+<p>conn user<em>userA
+    also=roadwarriors</em>rsa
+    rightid=@userA.yourdomani
+    rightsubnet=  ???
+    rightcert=userACert.pem
+    auto=add</p>
+
+<p>conn user<em>userB
+    also=roadwarriors</em>rsa
+    rightid=@userB.yourdomani
+    rightsubnet=  ???
+    rightcert=userBCert.pem
+    auto=add<br>
+</pre></p></li>
+</ol>
+
+<p>User A and B are two roadwarrior users that can connect at the same time to your server.</p>
+
+<p>Here an example of a <a href="https://www.shrew.net/">shrewsoft</a> client configuration for the above setting:</p>
+
+<pre>
+n:version:2
+n:network-ike-port:500
+n:network-mtu-size:1380
+n:client-addr-auto:0
+n:network-natt-port:4500
+n:network-natt-rate:15
+n:network-frag-size:540
+n:network-dpd-enable:1
+n:client-banner-enable:0
+n:network-notify-enable:1
+n:client-wins-used:0
+n:client-wins-auto:0
+n:client-dns-used:1
+n:client-dns-auto:0
+n:client-splitdns-used:0
+n:client-splitdns-auto:0
+n:phase1-dhgroup:2
+n:phase1-life-secs:86400
+n:phase1-life-kbytes:0
+n:vendor-chkpt-enable:0
+n:phase2-life-secs:3600
+n:phase2-life-kbytes:0
+n:policy-nailed:0
+n:policy-list-auto:0
+s:network-host:  ???
+s:client-auto-mode:disabled
+s:client-iface:virtual
+s:client-ip-addr:  ???
+s:client-ip-mask:  ???
+s:network-natt-mode:enable
+s:network-frag-mode:enable
+s:client-dns-addr:  ???
+s:client-dns-suffix:  ???
+s:auth-method:mutual-rsa
+s:ident-client-type:fqdn
+s:ident-server-type:address
+s:ident-client-data:userA.yourdomain
+s:phase1-exchange:main
+s:phase1-cipher:3des
+s:phase1-hash:sha1
+s:phase2-transform:esp-3des
+s:phase2-hmac:sha1
+s:ipcomp-transform:disabled
+n:phase2-pfsgroup:2
+s:policy-level:auto
+s:policy-list-include:   ???
+s:auth-client-cert:userACert.pem
+b:auth-client-cert-data:   ???
+s:auth-client-key:userAKey.pem
+b:auth-client-key-data:   ???
+s:auth-server-cert:caCert.pem
+b:auth-server-cert-data:   ???
+</pre>    
+
+<p>Some usefull shell command:</p>
+
+<ul>
+<li><p>Check ipsec loaded your CA certifcates:
+<pre> ipsec auto --listcacerts</pre></p></li>
+<li><p>Check ipsec loaded your certifcates:
+<pre> ipsec auto --listcerts</pre></p></li>
+<li><p>List loaded public keys:
+<pre> ipsec auto --listpubkeys</pre></p></li>
+<li><p>Check a certifcate:
+<pre> openssl x509 -text -noout -in /etc/ipsec.d/cacerts/caCert.pem</pre></p></li>
+<li><p>Check a Key:
+<pre> openssl rsa -in privateKey.key -check</pre>    </p></li>
+</ul>
+
+</div>
